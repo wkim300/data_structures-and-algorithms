@@ -6,6 +6,8 @@ equal-size elements indexed by contiguous integers
 
 Key Attributes:
 - Constant time access to read/write
+- Allows random access of elements
+- Expensive insertion/deletion due to copy & paste operation
 
 Implement a vector (mutable array with automatic resizing):
  Practice coding using arrays and pointers, and pointer math to jump to an index instead of using indexing.
@@ -34,6 +36,9 @@ Space
 contiguous in memory, so proximity helps performance
 space needed = (array capacity, which is >= n) * size of item, but even if 2n, still O(n)
 
+
+Or in Python, "list" is really a dynamic array. See ref:https://wiki.python.org/moin/TimeComplexity
+
 """
 import ctypes 
   
@@ -57,7 +62,7 @@ class DynamicArray(object):
         Return element at index k 
         """ 
         # check if k is valid
-        if self.n < k or k < 0:
+        if k > self.n or k < 0:
             return IndexError("k is out of bounds")
         return self.arr[k] # otherwise, return the item
     
@@ -80,7 +85,7 @@ class DynamicArray(object):
         self.arr[self.n] = ele
         self.n+=1  
   
-    def insertAt(self,item,index):
+    def insert_at(self,item,index):
         """ 
          This function inserts the item at any specified index. 
         """
@@ -103,7 +108,7 @@ class DynamicArray(object):
         """
         This function inserts the item in front of the array
         """
-        self.insertAt(item, 0)
+        self.insert_at(item, 0)
           
     def delete(self): 
         """ 
@@ -130,7 +135,7 @@ class DynamicArray(object):
         self.n-=1
         return temp
       
-    def removeAt(self,index): 
+    def remove_at(self,index): 
         """ 
         This function deletes item from a specified index.. 
         """
@@ -183,25 +188,25 @@ if __name__ == "__main__":
     print("current n is = ", arr.n)
 
     #
-    arr.insertAt(4, 4)
-    print("\nAfter insertAt(), arr = ", arr)
+    arr.insert_at(4, 4)
+    print("\nAfter insert_at(), arr = ", arr)
     print("current capacity is = ", arr.capacity)
     print("current n is = ", arr.n)
 
     # 
-    arr.insertAt(-1, 2)
-    print("\nAfter insertAt(), arr = ", arr)
+    arr.insert_at(-1, 2)
+    print("\nAfter insert_at(), arr = ", arr)
     print("current capacity is = ", arr.capacity)
 
     # 
     temp = arr.pop()
-    print("\nAfter insertAt(), arr = ", arr)
+    print("\nAfter insert_at(), arr = ", arr)
     print("poped element is = ", temp)
     print("current capacity is = ", arr.capacity)
 
     for i in range(8):
-        arr.insertAt(-9, 0)
-    print("\nAfter insertAt()x8, arr = ", arr)
+        arr.insert_at(-9, 0)
+    print("\nAfter insert_at()x8, arr = ", arr)
     print("poped element is = ", temp)
     print("current capacity is = ", arr.capacity)
 
