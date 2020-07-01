@@ -1,6 +1,12 @@
-
-
 """
+Theory Video Reference: https://www.coursera.org/lecture/data-structures/arrays-OsBSF
+
+Array Definition: Contiguous area of memory consisting of 
+equal-size elements indexed by contiguous integers
+
+Key Attributes:
+- Constant time access to read/write
+
 Implement a vector (mutable array with automatic resizing):
  Practice coding using arrays and pointers, and pointer math to jump to an index instead of using indexing.
  new raw data array with allocated memory
