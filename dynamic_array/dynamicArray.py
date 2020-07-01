@@ -20,10 +20,11 @@ start with 16, or if starting number is greater, use power of 2 - 16, 32, 64, 12
  - resize(new_capacity) // private function
     when you reach capacity, resize to double the size
     when popping an item, if size is 1/4 of capacity, resize to half
- Time
+Time
 O(1) to add/remove at end (amortized for allocations for more space), index, or update
 O(n) to insert/remove elsewhere
- Space
+
+Space
 contiguous in memory, so proximity helps performance
 space needed = (array capacity, which is >= n) * size of item, but even if 2n, still O(n)
 
@@ -93,6 +94,9 @@ class DynamicArray(object):
         self.n+=1
     
     def prepend(self, item):
+        """
+        This function inserts the item in front of the array
+        """
         self.insertAt(item, 0)
           
     def delete(self): 
@@ -156,7 +160,7 @@ class DynamicArray(object):
         for i in range(self.n):
             if self.arr[i]==item:
                 return i 
-
+        return -1
 
 if __name__ == "__main__":
     arr = DynamicArray()
@@ -168,47 +172,53 @@ if __name__ == "__main__":
 
     # delete
     arr.delete()
-    print("")
-    print("After delete(), arr = ", arr)
+    print("\nAfter delete(), arr = ", arr)
     print("current capacity is = ", arr.capacity)
     print("current n is = ", arr.n)
 
     #
     arr.insertAt(4, 4)
-    print("")
-    print("After insertAt(), arr = ", arr)
+    print("\nAfter insertAt(), arr = ", arr)
     print("current capacity is = ", arr.capacity)
     print("current n is = ", arr.n)
 
     # 
     arr.insertAt(-1, 2)
-    print("")
-    print("After insertAt(), arr = ", arr)
+    print("\nAfter insertAt(), arr = ", arr)
     print("current capacity is = ", arr.capacity)
 
     # 
     temp = arr.pop()
-    print("")
-    print("After insertAt(), arr = ", arr)
+    print("\nAfter insertAt(), arr = ", arr)
     print("poped element is = ", temp)
     print("current capacity is = ", arr.capacity)
 
     for i in range(8):
         arr.insertAt(-9, 0)
-    print("After insertAt()x8, arr = ", arr)
+    print("\nAfter insertAt()x8, arr = ", arr)
     print("poped element is = ", temp)
     print("current capacity is = ", arr.capacity)
 
-    print("")
-    print("popping...x8")
+    print("\npopping...x8")
     for i in range(10):
         arr.pop()
         print("After popping, arr = ", arr)
         print("current capacity is = ", arr.capacity)
 
-    print("")
-    print("prepending -10...x8")
+    print("\nprepending -10...x8")
     for i in range(8):
         arr.prepend(-10)
-        print("After popping, arr = ", arr)
+        print("After prepending, arr = ", arr)
         print("current capacity is = ", arr.capacity)
+
+    print("\nFind item's first index")
+    temp = arr.find(-9)
+    print("Current arr = ", arr)
+    print("The index for -9 is = ", temp)
+
+    print("\nFind item's first index")
+    temp = arr.find(-99)
+    print("Current arr = ", arr)
+    if temp==-1:
+        print("The item does not exist")
+    
