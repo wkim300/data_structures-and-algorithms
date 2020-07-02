@@ -102,7 +102,7 @@ class SLinkedList:
             return
         else:
             temp = self.head  # retrieve front node
-            self.head = temp.next.next # assign head to the second node
+            self.head = temp.next # assign head to the second node
             self.n -= 1
         return temp.val
     
@@ -118,10 +118,32 @@ class SLinkedList:
             # until temp_node is final-1 node
             while temp_node.next.next is not None:
                 temp_node = temp_node.next
-            temp_node = None
+            temp = temp_node.next
+            temp_node.next = None  # reset the tail node
             self.n -= 1 # decrement
-            return temp_node.next.val
+            return temp.val
 
+    def front(self):
+        """
+        Returns front item
+        """
+        if self.head is None:
+            print("Error: empty list!")
+            return
+        return self.head.val
+
+    def back(self):
+        """
+        Returns back item
+        """
+        if self.head is None:
+            print("Error: empty list!")
+            return
+        temp_node = self.head
+        while temp_node.next is not None:
+            temp_node = temp_node.next
+        return temp_node.val
+        
     def is_empty(self):
         """
         Returns true if the list is empty
@@ -136,9 +158,49 @@ class SLinkedList:
             return self.head.val
 
         temp_node = self.head
-        for _ in range(self.n):
+        for _ in range(index):
             temp_node = temp_node.next
         return temp_node.val
+
+    def insert(self, index, value):
+        """
+        insert value at index, 
+        so current item at that index is pointed to by new item at index
+        """
+        # check the validity of index
+        if index < 0 or index > self.n:  # larger than no. of items
+            print("Index Error; please input valid index")
+            return
+        # if index==0, same as push_front
+        if index==0:
+            self.push_front(value)
+            return
+        # else,
+        new_node = Node(value)
+        temp_node = self.head
+        for _ in range(index-1):
+            temp_node = temp_node.next  # traverse the list
+        new_node.next = temp_node.next  # temp_node is index-1 node
+        temp_node.next =  new_node
+        self.n += 1
+    
+    def delete(self, index):
+        """
+        removes node at given index
+        """
+        # check validity of index:
+        if index < 0 or index > self.n:
+            print("Index Error; please input valid index")
+            return
+        # remove first element
+        if index==0:
+            _ = self.pop_front()
+            return
+        temp_node = self.head
+        for _ in range(index-1):
+            temp_node = temp_node.next  # traverse the list
+        temp_node.next = temp_node.next.next
+        self.n -= 1
         
 
 if __name__=="__main__":
@@ -168,12 +230,71 @@ if __name__=="__main__":
 
     # pop front
     temp = llist.pop_front()
-    print(f"\nNo. of items = {llist.n}")
+    print("\npop_front")
+    print(f"No. of items = {llist.n}")
     print(f"poped item = {temp}")
     print(llist)
 
     # pop back
-    temp = llist.pop_front()
-    print(f"\nNo. of items = {llist.n}")
+    temp = llist.pop_back()
+    print("\npop_back")
+    print(f"No. of items = {llist.n}")
     print(f"poped item = {temp}")
+    print(llist)
+
+    # get front
+    temp = llist.front()
+    print("\nget front()")
+    print(f"No. of items = {llist.n}")
+    print(f"poped item = {temp}")
+    print(llist)
+
+    # back
+    temp = llist.back()
+    print("\nget back()")
+    print(f"No. of items = {llist.n}")
+    print(f"poped item = {temp}")
+    print(llist)
+
+    # value_at
+    temp = llist.value_at(1)
+    print("\nvalue_at(1)")
+    print(f"No. of items = {llist.n}")
+    print(f"poped item = {temp}")
+    print(llist)
+
+    # insert
+    llist.insert(0, "Holiday")
+    print("\ninsert at index=0")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # insert
+    llist.insert(1, "Sun")
+    print("\ninsert at index=1")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # insert
+    llist.insert(4, "Holiday")
+    print("\ninsert at index=4")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # insert
+    llist.insert(6, "Thurs")
+    print("\ninsert at index=6(end)")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # remove
+    llist.delete(1)
+    print("\ndelete at index=1")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # remove
+    llist.delete(0)
+    print("\ndelete at index=0")
+    print(f"No. of items = {llist.n}")
     print(llist)

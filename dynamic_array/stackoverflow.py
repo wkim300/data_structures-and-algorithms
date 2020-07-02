@@ -5,5 +5,7 @@ class A:
         print(repr(item))
 
 if __name__ == "__main__":
-    for i in range(1):
-        print(i)
+    for i in range(3):
+        print("hi")
+
+    print("end")
