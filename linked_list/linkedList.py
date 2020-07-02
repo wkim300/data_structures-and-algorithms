@@ -192,16 +192,93 @@ class SLinkedList:
         if index < 0 or index > self.n:
             print("Index Error; please input valid index")
             return
-        # remove first element
-        if index==0:
+        # if head element is to be removed,
+        if index == 0:
             _ = self.pop_front()
             return
+        # else,
         temp_node = self.head
         for _ in range(index-1):
             temp_node = temp_node.next  # traverse the list
+        index_node = temp_node.next
+        # unlink
         temp_node.next = temp_node.next.next
+        index_node = None
         self.n -= 1
+    
+    def remove_value(self, value):
+        """
+        removes the first item in the list with this value
+        """
+        # check the head's key
+        temp_node = self.head
+        if temp_node.val==value:
+            self.head = temp_node.next
+            temp_node = None
+            self.n -= 1
+            return
+
+        # search for the key value
+        while temp_node.val != value:  # check the next node's key
+            prev_node = temp_node  # store prev node to change prev.next
+            temp_node = temp_node.next
+        # if the key is not found
+        if temp_node == None:
+            print("Error; key value is not found")
+            return
+        else:
+            # reconfigure; unlink the current node
+            prev_node.next = temp_node.next
+            temp_node = None
+            self.n -= 1
+
+    def value_n_from_end(self, n):
+        """
+        returns the value of the node at nth position from the end of the list
+        """
+        # check the validity of the input
+        if n > self.n-1:
+            print(f"Error; n is greater than the length of the list = {self.n-1}") 
+            return
         
+        temp_node = self.head  # store head
+        for _ in range((self.n-1) - n):
+            temp_node = temp_node.next  # traverse the list
+        return temp_node.val
+
+    def reverse(self):
+        """
+        reverse the list
+        """ 
+        # check if the list is empty
+        if self.head is None:
+            print("Error; the list is empty")
+            return
+        # if there is only one entry, do nothing
+        if self.n==1:
+            return
+        # else,
+        prev_node = None  # tail should be none
+        cur_node = self.head
+        while cur_node is not None:
+            next_node = cur_node.next
+            cur_node.next = prev_node
+            prev_node = cur_node
+            cur_node = next_node
+        self.head = prev_node
+
+    def delete_list(self):
+        """
+        Delete the entire linked list
+        """ 
+        temp_node = self.head
+        while temp_node is not None:
+            prev_node = temp_node
+            temp_node = temp_node.next
+            # prev_node.val += ": deleted"  # for sanity check
+            # reset data
+            prev_node.val = None
+            prev_node.next = None
 
 if __name__=="__main__":
     llist = SLinkedList()
@@ -298,3 +375,45 @@ if __name__=="__main__":
     print("\ndelete at index=0")
     print(f"No. of items = {llist.n}")
     print(llist)
+
+    # remove key
+    llist.remove_value("Holiday")
+    print("\nremove key = Holiday")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # remove key
+    llist.remove_value("Thurs")
+    print("\nremove key = Thurs")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # search nth from the end
+    temp = llist.value_n_from_end(0)
+    print("\nvalue n = 0 from the end")
+    print(f"item = {temp}")
+    print(llist)
+
+    # search nth from the end
+    temp = llist.value_n_from_end(2)
+    print("\nvalue n = 2 from the end")
+    print(f"item = {temp}")
+    print(llist)
+
+    # insert new item
+    llist.insert(0, "Holiday")
+    print("\ninsert new item")
+    print(f"No. of items = {llist.n}")
+    print(llist)
+
+    # reverse list
+    llist.reverse()
+    print("\nreverse list!")
+    print(f"No. of items = {llist.n}")
+    print(f"reversed list = {llist}")
+
+    # reverse list
+    llist.delete_list()
+    print("\nDelete the list!")
+    print(f"No. of items = {llist.n}")
+    print(f"Linked list = {llist}")
