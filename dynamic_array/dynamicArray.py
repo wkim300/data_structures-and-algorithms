@@ -38,7 +38,8 @@ space needed = (array capacity, which is >= n) * size of item, but even if 2n, s
 
 
 Or in Python, "list" is really a dynamic array. See ref:https://wiki.python.org/moin/TimeComplexity
-
+In Python,
+- list.append() & list.pop() take O(1), amortized
 """
 import ctypes 
   
@@ -232,4 +233,3 @@ if __name__ == "__main__":
     print("Current arr = ", arr)
     if temp==-1:
         print("The item does not exist")
-    
